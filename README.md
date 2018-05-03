@@ -1,34 +1,34 @@
 This repo to document or exemplify an idea that we can cut out the middleman
-`liaison` script/sidecar, and simply allow a sidenet geth `dudegeth` and
-a mainnet geth `mangeth` to communicate reciprocally and arbitrarily.
+[`liaison` script/sidecar](https://github.com/ETCDEVTeam/sidekick-liaison), and simply allow a sidenet geth `dudegeth` and
+a mainnet geth `mangeth` to communicate reciprocally and arbitrarily with plain JS Console `console.log` statements, a few pipes `|`, and adjacent `.ipc` files.
 
 My idea so far has this using geth's IPC, `loadScript()`, and `tee` pretty heavily.
 
-- IPC allows clean RPC iteraction for a given client
-- `loadScript` allows loading arbitrary global data (probably feedback data
-  from a siamese counterpart mainnet/sidenet)
-- `tee` + `grep` allows easy management of geths stdout to designated
+`tee` + `grep` allows easy management of geths' stdout to designated
   "data-flow" files; toward
   + `.ipc` for clean RPC API interactions, 
-  + `loadScript(data.file)` for passing arbitrary data between nodes
+  + `loadScript(data.file)` for passing arbitrary data between nodes (probably feedback data from a siamese counterpart mainnet/sidenet)
   + `config/requiredHash.json` for persistent configuration updates
 
 ![diagram](./assets/sidechain-siamese-diagram.png)
 
+### Sufficient PoC
 
 As a sufficient demonstration, the given network should
 
 - show that transactions can be posted between chains (eg. post data to opposing contract)
 - show that sidechain consensus can rely on existence of arbitrary transactions or contract data
 - show that arbitrary data can be passed between sidenet and mainnet nodes
-- show that data consensus data can be persisted for sidenet node (eg `requiredHash` values)
+- show that consensus data can be persisted for sidenet node (eg `requiredHash` values)
 
+### Nice-to-Have PoC
  
 And as nice-to-haves or hints toward futher exploration, will:
 
 - shared keystore and accounts
 - integrate alternative consensus mechanism, eg. Tx2PoA
 
+----
 
 ### Pros
 
