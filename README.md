@@ -15,11 +15,16 @@ My idea so far has this using geth's IPC, `loadScript()`, and `tee` pretty heavi
 
 As a sufficient demonstration, the given network should
 
-- show that 
+- show that transactions can be posted between chains (eg. post data to opposing contract)
+- show that sidechain consensus can rely on existence of arbitrary transactions or contract data
+- show that arbitrary data can be passed between sidenet and mainnet nodes
+- show that data consensus data can be persisted for sidenet node (eg `requiredHash` values)
 
  
 And as nice-to-haves or hints toward futher exploration, will:
-- 
+
+- shared keystore and accounts
+- integrate alternative consensus mechanism, eg. Tx2PoA
 
 
 ### Pros
