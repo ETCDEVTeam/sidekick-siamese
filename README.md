@@ -8,7 +8,10 @@ My idea so far has this using geth's IPC, `loadScript()`, and `tee` pretty heavi
 - `loadScript` allows loading arbitrary global data (probably feedback data
   from a siamese counterpart mainnet/sidenet)
 - `tee` + `grep` allows easy management of geths stdout to designated
-  "data-flow" files, either toward IPC or `loadScript(data.file)` files.
+  "data-flow" files; toward
+  + `.ipc` for clean RPC API interactions, 
+  + `loadScript(data.file)` for passing arbitrary data between nodes
+  + `config/requiredHash.json` for persistent configuration updates
 
 ![diagram](./assets/sidechain-siamese-diagram.png)
 
