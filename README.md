@@ -10,6 +10,18 @@ My idea so far has this using geth's IPC, `loadScript()`, and `tee` pretty heavi
 - `tee` + `grep` allows easy management of geths stdout to designated
   "data-flow" files, either toward IPC or `loadScript(data.file)` files.
 
+![diagram](./assets/sidechain-siamese-diagram.png)
+
+
+As a sufficient demonstration, the given network should
+
+- show that 
+
+ 
+And as nice-to-haves or hints toward futher exploration, will:
+- 
+
+
 ### Pros
 
 1. Relies only on Javascript and basic bash pipes to facilitate interaction and
