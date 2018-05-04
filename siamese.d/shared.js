@@ -1,48 +1,48 @@
 // Shared functions and vars between sidenet _dude_ client and mainnet _man_ client
 // auxiliary logic.
 
-// Shared data and IPC interactions can accomplish similar things.
-// Shared data in this case is presented as an opportunity for arbitrary
-// data exchange.
-var sharedDataFilepath = "siamese.d/shared.data.js"; // relative to --js-path
-var sharedDataDefault = {
-    "mainnet": {
-        "status": 404,
-        "blockNumber": 0,
-        "checkpointContractAddress": "0xdeadbeef..."
-        // eg. include fields for rawTransactionObjects, signatures, checkpointStatuses, even shared functions
-    },
-    "sidenet": {
-        "status": 404,
-        "blockNumber": 0,
-        "checkpointContractAddress": "0xdeadbeef..."
-    }
+var state = {
+    rpc_id: 1, // use this for matching call and reponse values
+    checkpointLatest: 0, // TODO: parse me from stateful loadScript files
+    data: {}
 };
-var sharedData = sharedDataDefault;
-var shareDataCache = sharedData;
+var data = {}; // arbitrary global data, can be reused for status,response,or whatever. Functions and data handling should use scope assigned objects after reading.
 
-// overwrites sharedData var
-function loadSharedData(didLoad, didNotLoad) {
-    var ok = loadScript(sharedDataFilepath);
-    if (ok && didLoad !== null) {
-        didLoad(sharedData);
-    } else if (!ok && didNotLoad !== null) {
-        didNotLoad();
-    }
+// node == [mainnet|sidenet]
+// kindof == [status|response]
+// TODO: status
+function dataPath(node, kindof) {
+    return dataDir + "/" + node + "/" + kindof + ".data";
 }
 
-// var sharedData = "'json.stringified data'";
-function writeSharedData(data) {
-    console.log("sharedData = " + JSON.stringify(data) + ";");
+// returns {data: {}, ok: bool}
+function loadData(path) {
+    var ok = loadScript(path);
+    var _data = data; // reassign from global
+    return {
+        ok: ok,
+        data: _data
+    };
 }
+
+// Currently, this is kind-of-weirdly not necessary.
+// TODO would be to integrate this with the command pipe handles (eg. sortinghat.sh)
+// to make var names/data easily greppable and thus sortable to the right
+// data file endpoint. But status is only a nice-to-have at this point, and
+// response can be handled unilateraly.
+// function writeData(path, _data) {
+//     console.log("data = " + JSON.stringify(_data) + ";");
+// }
 
 // '{"jsonrpc":"2.0","method":"eth_isSyncing","params":[],"id":1}'
-function writeIPC(method, params) {
+function writeRPC(method, params) {
+    state.rpc_id++
     var call = {
         "jsonrpc": "2.0",
         "method": method,
         "params": params,
-        "id": Math.floor(Math.random()*100000) // for example
+        "id": state.rpc_id
     };
     console.log(JSON.stringify(call));
+    return call;
 }

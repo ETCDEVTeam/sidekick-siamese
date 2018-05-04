@@ -1,13 +1,79 @@
 // Example ephemeral logic for sidenet client.
 
-var checkpointInterval = 10;
+var checkpointInterval = 50;
 
-// initialize
-loadSharedData(function(data) {
-    data["sidenet"]["status"] = 200;
-    data["sidenet"]["blockNumber"] = eth.blockNumber;
-    writeSharedData(data);
-}, null)
+function handleConfirmedCheckpointTransaction(tx) {
+
+}
+
+function postTransactionDetailRequest(txHash) {
+
+}
+
+// didGetReponseFn should return a bool, checking (res) to see if desired fields are got == want
+// onGet gets (res) and can handle it however
+// timeoutGet gets (res) and can handle it however
+function awaitReponse(didGetReponseFn, onGet, timeoutGet) {
+    //
+}
+
+function wantResponse(res) {
+    if (res === null || typeof res === "undefined" || !res.hasOwnProperty("result")) {
+        return false;
+    }
+
+}
+
+function awaitCallRes(call) {
+    var waitSecs = 5;
+    var r = loadData(dataPath("mainnet", "result"));
+    if (!r.ok) {
+        admin.sleep(waitSecs);
+        awaitCallRes(call);
+    } else {
+        wantResponse(r.data);
+    }
+    // wantResponse()
+}
+
+// callback fn receives (call) arg
+function postCheckpointTransaction(awaiter) {
+    // TODO: use eth_sendRawTransaction
+    var tx = {
+
+    };
+    var signedTx = eth.signTransaction(tx);
+
+    var call = writeRPC("eth_sendRawTransaction", [signedTx]);
+
+
+
+    if (callback !== null) {
+        // the important thing here is that we pass along the in-mem(and eventually stateful)
+        // identity `id` that can be used to match a given in-mem request with a given response read from file
+        awaiter(call);
+    }
+}
+
+// yields distance to next checkpoint.
+// TODO: since admin.sleepBlocks can't offer guaranteed increments,
+// this function should not demand precision, but instead allow stateful
+// minimum-spaced checkpoints.
+function checkpointDistance() {
+    var bn = eth.blockNumber;
+    var dist = bn % checkpointInterval;
+    if (bn - checkpointInterval > state.checkpointLatest) {
+        dist = 0;
+    }
+    return dist;
+}
+
+function handleCheckpoint() {
+    if (checkpointDistance() !== 0) {
+        return;
+    };
+    postCheckpointTransaction(awaitReponse);
+}
 
 function simulateCheckpoint() {
     var bn = eth.blockNumber;
