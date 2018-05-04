@@ -13,16 +13,17 @@ function simulateCheckpoint() {
     var bn = eth.blockNumber;
     if (bn % checkpointInterval === 0) {
         var block = eth.getBlock(bn);
+        var acc = eth.accounts[0];
         var checkpointData = {
             "block": bn,
-            "hash": block.hash,
-            "sig": eth.sign(eth.accounts[0], block.hash)
+            "hash": block.hash
         };
+        var d = JSON.stringify(checkpointData);
         var txO = {
             "from": eth.accounts[0],
             "value": web3.toWei(1, 'wei'),
-            "data": web3.fromAscii(JSON.stringify(checkpointData)).substring(2)
-        }
+            "data": web3.fromAscii(d).substring(2)
+        };
 
         // could also use eth_signTransaction -> eth_sendRawTransaction to segragate accounts, which would probably be safe
         writeIPC("eth_sendTransaction", [txO]);
@@ -30,8 +31,10 @@ function simulateCheckpoint() {
         // demo and oversimple way of handling validation
         if (bn > 0) {
             loadSharedData(function(d) {
-                if (d["mainnet"]["knownTxs"].length !== bn/checkpointInterval) {
-                    // boom; invalid - tx wasn't recorded by mainnet!
+                if (d.hasOwnProperty("mainnet") && d["mainnet"].hasOwnProperty("knownTxs")) {
+                  if (d["mainnet"]["knownTxs"].length !== bn/checkpointInterval) {
+                      // boom; invalid - tx wasn't recorded by mainnet!
+                  }
                 }
             }, null);
         }

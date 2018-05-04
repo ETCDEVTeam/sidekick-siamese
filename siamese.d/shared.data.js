@@ -1,3 +1,1 @@
-sharedData = {"mainnet":{"blockNumber":35,"checkpointContractAddress":"0xdeadbeef...","knownTxs":[],"status":200},"sidenet":{"blockNumber":0,"checkpointContractAddress":"0xdeadbeef...","status":404}};
-sharedData = {"mainnet":{"blockNumber":36,"checkpointContractAddress":"0xdeadbeef...","knownTxs":[],"status":200},"sidenet":{"blockNumber":0,"checkpointContractAddress":"0xdeadbeef...","status":404}};
-sharedData = {"mainnet":{"blockNumber":38,"checkpointContractAddress":"0xdeadbeef...","knownTxs":[],"status":200},"sidenet":{"blockNumber":0,"checkpointContractAddress":"0xdeadbeef...","status":404}};
+
