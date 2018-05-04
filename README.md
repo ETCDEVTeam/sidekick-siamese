@@ -1,5 +1,9 @@
 ```
-geth $(cat man-client/flags.conf) | tee ./dude-client/geth.ipc ./siamese.d/shared.data.js
+$ geth $(cat dude-client/flags.conf) | ./sortinghat.sh man
+```
+
+```
+$ geth $(cat man-client/flags.conf) | ./sortinghat.sh dude
 ```
 
 This repo to document or exemplify an idea that we can cut out the middleman
