@@ -1,10 +1,10 @@
 {
     "identity": "dude-client",
-    "name": "DUDE-CLIENT",
+    "name": "DUDE-CLIENT (Sidenet)",
     "state": {
         "startingNonce": 42
     },
-    "network": 220,
+    "network": 222,
     "consensus": "ethash-test",
     "genesis": {
         "nonce": "0x00006d6f7264656e",

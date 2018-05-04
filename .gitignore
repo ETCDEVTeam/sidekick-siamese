@@ -2,4 +2,6 @@ chaindata/
 dapp/
 log/
 mlogs/
+history
+indexes/
 

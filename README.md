@@ -1,3 +1,7 @@
+```
+geth $(cat man-client/flags.conf) | tee ./dude-client/geth.ipc ./siamese.d/shared.data.js
+```
+
 This repo to document or exemplify an idea that we can cut out the middleman
 [`liaison` script/sidecar](https://github.com/ETCDEVTeam/sidekick-liaison), and simply allow a sidenet geth `dudegeth` and
 a mainnet geth `mangeth` to communicate reciprocally and arbitrarily with plain JS Console `console.log` statements, a few pipes `|`, and adjacent `.ipc` files.
@@ -6,7 +10,7 @@ My idea so far has this using geth's IPC, `loadScript()`, and `tee` pretty heavi
 
 `tee` + `grep` allows easy management of geths' stdout to designated
   "data-flow" files; toward
-  + `.ipc` for clean RPC API interactions, 
+  + `.ipc` for clean RPC API interactions,
   + `loadScript(data.file)` for passing arbitrary data between nodes (probably feedback data from a siamese counterpart mainnet/sidenet)
   + `config/requiredHash.json` for persistent configuration updates
 
@@ -22,7 +26,7 @@ As a sufficient demonstration, the given network should
 - show that consensus data can be persisted for sidenet node (eg `requiredHash` values)
 
 ### Nice-to-Have PoC
- 
+
 And as nice-to-haves or hints toward futher exploration, will:
 
 - shared keystore and accounts
